@@ -1,13 +1,13 @@
 # Solution to problem 20
-## of Matt's Ruby Fundamentals challenges
+## ...of Matt's Ruby Fundamentals challenges
 
 ## Problem:
 
-think about coding a basic PTV app (like our public transport app, if you aren't familiar). The final product would take a user input of an origin station, and a destination station, and return a data structure that contains the stops to pass through, and the line changes if required. Perhaps restrict the user input so there cannot be an error returned (the only stations they choose are valid - or assume this, but say if that's your choice). Start with one train line, represented by an array. If you extend it to two lines, you need to think about how to represent the lines as data, and this might be a complex object. 
+Think about coding a basic PTV app (like our public transport app, if you aren't familiar). The final product would take a user input of an origin station, and a destination station, and return a data structure that contains the stops to pass through, and the line changes if required. Perhaps restrict the user input so there cannot be an error returned (the only stations they choose are valid - or assume this, but say if that's your choice). Start with one train line, represented by an array. If you extend it to two lines, you need to think about how to represent the lines as data, and this might be a complex object. 
 
 ## My solution:
 
-I wanted to have a solution that would work with more than just one or two lines of stations and settled on having a go using a recursive algorithm to find a path for the practice of working with recursion (the last time I put it to use was probably at uni).
+I wanted to have a solution that would work with more than just one or two lines of stations and settled on having a go using a recursive algorithm to find a path, partly for the practice of working with recursion (the last time I put it to use was probably at uni).
 
 You can make the lines join in many ways but if there is a loop in the tracks I would make the representation such that there didn't seem to be a loop in a line such as illustrated below:
 
