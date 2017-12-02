@@ -164,8 +164,9 @@ class RouteFinder
     # 'route' is an array of stations, no two stations can have the same name, a repeat of a station in a route indicates a line hop
     def interpret_route(route)
     #  example input: ["w", "s", "s", "z", "aa", "ab", "ab", "h", "d", "d", "c", "b", "a"]
-      route.each_with_index do |station, index|
-        if route[index-1] == station
+    #  example output:["w", "s", "change to the line7 line", "z", "aa", "ab", "change to the line2 line", "h", "d", "change to the line1 line", "c", "b", "a"]
+      route.each_with_index do |station, index| 
+        if route[index-1] == station # this logic could be problematic if the first and last elements of the array are the same station, but I'm making an assumption that such an array won't be passed to it.
           #then there was a line hop
           #determine what the new line is
           @lines.each do |line|
@@ -179,6 +180,8 @@ class RouteFinder
     end
 
     #this method basically converts the route array into a single string that (hopefully) makes more sense
+      #  example input:["w", "s", "change to the line7 line", "z", "aa", "ab", "change to the line2 line", "h", "d", "change to the line1 line", "c", "b", "a"]
+        #  example output:"w ~> s ~> change to the line7 line ~> z ~> aa ~> ab ~> change to the line2 line ~> h ~> d ~> change to the line1 line ~> c ~> b ~> a"
     def get_readable_route(route_as_array)
       readable_route = ''
       route_as_array.each do |step|
