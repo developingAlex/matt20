@@ -115,10 +115,9 @@ class RouteFinder
           break #stop looking
         end
       end
-      if !common_line.nil? # if we've already found a common line no need to 
-          # make more comparisons so stop looking:
-        break
-      end
+
+      break unless common_line.nil? 
+      # if we didn't find a common line, keep looking
     end
     
     # if the stations didn't share a common line, then we begin the 
@@ -194,16 +193,14 @@ class RouteFinder
       # destination station on one of the lines that it's also on:
       origin_index_in_line = common_line.stations.index(origin)
       dest_index_in_line = common_line.stations.index(dest)
-      route = nil
       # Ensure the order of the stations reflects 
       # the direction we're travelling:
       if origin_index_in_line < dest_index_in_line
         route = common_line.stations[origin_index_in_line..dest_index_in_line]
       else
         route = common_line.stations[dest_index_in_line..origin_index_in_line]
-        route.reverse!
+        route.reverse
       end
-      return route
     end
   end
 
