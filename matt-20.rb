@@ -176,20 +176,25 @@ class RouteFinder
       end
       
     else   # The stations are on the same line:
-      # This block of code is basically the termination clause of our 
-      # recursion.
+      # This block of code is basically the successful termination clause 
+      # of our recursion.
       # It means that the 'current' origin we're looking from can see the 
       # destination station on one of the lines that it's also on:
-      origin_index_in_line = common_line.stations.index(origin)
-      dest_index_in_line = common_line.stations.index(dest)
-      # Ensure the order of the stations reflects 
-      # the direction we're travelling:
-      if origin_index_in_line < dest_index_in_line
-        route = common_line.stations[origin_index_in_line..dest_index_in_line]
-      else
-        route = common_line.stations[dest_index_in_line..origin_index_in_line]
-        route.reverse
-      end
+      get_route_in_common_line(common_line, origin, dest)
+    end
+  end
+
+  def get_route_in_common_line(line, origin, dest)
+    origin_index_in_line = line.stations.index(origin)
+    dest_index_in_line = line.stations.index(dest)
+    # Ensure the order of the stations reflects 
+    # the direction we're travelling:
+    if origin_index_in_line < dest_index_in_line
+      route = line.stations[origin_index_in_line..dest_index_in_line]
+    else
+      route = line
+        .stations[dest_index_in_line..origin_index_in_line]
+        .reverse
     end
   end
 
