@@ -106,19 +106,8 @@ class RouteFinder
     dests_lines = get_lines_for_station(dest)
     #and check if the stations share a common line?
     #initialise common_line to nil
-    common_line = nil
-    origins_lines.each do |origin_line|
-      dests_lines.each do |dest_line|
-        if origin_line == dest_line
-          # then we've found a line in common!
-          common_line = origin_line
-          break #stop looking
-        end
-      end
+    common_line = get_common_line(origins_lines, dests_lines)
 
-      break unless common_line.nil? 
-      # if we didn't find a common line, keep looking
-    end
     
     # if the stations didn't share a common line, then we begin the 
     # recursive process:
@@ -204,7 +193,19 @@ class RouteFinder
     end
   end
 
-    # function to test if two stations are on the same line
+  def get_common_line(origin_lines, dest_lines)
+    common_line = nil
+    origin_lines.each do |origin_line|
+      if dest_lines.include?(origin_line)
+          # then we've found a line in common!
+          common_line = origin_line
+          break # so stop looking
+      end
+    end
+    common_line
+  end
+
+  # function to test if two stations are on the same line
   def stations_on_same_line?(station1, station2)
     @lines.each do |line|
       if line.contains_station?(station1) && line.contains_station?(station2)
