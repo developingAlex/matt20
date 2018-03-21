@@ -61,7 +61,7 @@ class RouteFinder
     @lines_searched = []
     #then get the route, and interpret it to add in the line hops, and then get
       # it in a readable form.
-    get_readable_route(interpret_route(get_route_recurse(origin,dest)))
+    interpret_line_changes(get_route_recurse(origin,dest)).join(' ~> ')
   end
 
   #helper method to get an array of lines that a particular station lies on - 
@@ -223,9 +223,9 @@ class RouteFinder
   #This method basically adds in the instructions to change trains/lines
   # 'route' is an array of stations, no two stations can have the same 
   # name, a repeat of a station in a route indicates a line hop
-  def interpret_route(route)
   #  example input: ["w", "s", "s", "z", "ab"]
   #  example output:["w", "s", "change to the line7 line", "z", "ab"]
+  def interpret_line_changes(route)
     route.each_with_index do |station, index| 
       if route[index-1] == station # Then there was a line hop
         # determine what the new line is
@@ -241,14 +241,6 @@ class RouteFinder
         # passed to it.
       end
     end
-  end
-
-  #this method basically converts the route array into a single string 
-  # that (hopefully) makes more sense
-  #  example input:  ["w", "s", "change to the line7 line", "z", "aa"]
-  #  example output: "w ~> s ~> change to the line7 line ~> z ~> aa"
-  def get_readable_route(route_as_array)
-    route_as_array.join(' ~> ')
   end
 
 end # class RouteFinder
