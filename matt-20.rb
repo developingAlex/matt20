@@ -245,15 +245,7 @@ class RouteFinder
   #  example input:  ["w", "s", "change to the line7 line", "z", "aa"]
   #  example output: "w ~> s ~> change to the line7 line ~> z ~> aa"
   def get_readable_route(route_as_array)
-    readable_route = ''
-    route_as_array.each do |step|
-      unless step == route_as_array.last
-        readable_route += step + " ~> "
-      else
-        readable_route += step
-      end
-    end
-    readable_route
+    route_as_array.join(' ~> ')
   end
 
 end # class RouteFinder
