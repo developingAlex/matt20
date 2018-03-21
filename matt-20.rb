@@ -121,22 +121,10 @@ class RouteFinder
       @lines_searched += origins_lines
 
       # determine neighbouring lines that have not already been searched,
-      neighbouring_lines_to_search = []
-      # by checking all lines that run through our 'current' origin
-      origins_lines.each do |line|
-        # and for each one, figuring out which lines are neighbours of it
-        line.neighbour_lines.each do |neighbour_line|
-          # that have not yet already been searched
-          if !neighbour_line.nil?
-            if !@lines_searched.include?(neighbour_line)
-              #and adding them to our list of neighbouring lines to search
-              neighbouring_lines_to_search << neighbour_line
-            end
-          end
-        end
-      end
-      
-      
+      neighbouring_lines_to_search = get_neighbouring_lines_not_yet_searched(
+        origins_lines,
+        @lines_searched)
+        
       if neighbouring_lines_to_search.empty?
         return nil  # then we've reached a point where we haven't found the 
           # destination station in this direction.
@@ -182,6 +170,22 @@ class RouteFinder
       # destination station on one of the lines that it's also on:
       get_route_in_common_line(common_line, origin, dest)
     end
+  end
+
+  def get_neighbouring_lines_not_yet_searched(origins_lines, lines_searched)
+    neighbouring_lines_to_search = []
+    # by checking all lines that run through our 'current' origin
+    origins_lines.each do |line|
+      # and for each one, figuring out which lines are neighbours of it
+      line.neighbour_lines.each do |neighbour_line|
+        # that have not yet already been searched
+        unless @lines_searched.include?(neighbour_line)
+          #and adding them to our list of neighbouring lines to search
+          neighbouring_lines_to_search << neighbour_line
+        end
+      end
+    end
+    neighbouring_lines_to_search
   end
 
   def get_route_in_common_line(line, origin, dest)
