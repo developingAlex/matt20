@@ -256,7 +256,7 @@ class RouteFinder
     readable_route
   end
 
-end
+end # class RouteFinder
 
 
 # This represents a line coordinator person that looks at a 
