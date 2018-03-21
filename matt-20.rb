@@ -39,11 +39,7 @@ class Line
   end
 
   def contains_station?(station_being_checked)
-    if @stations.include?(station_being_checked)
-      true
-    else
-      false
-    end
+    @stations.include?(station_being_checked)
   end
 
 end
