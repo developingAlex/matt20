@@ -61,7 +61,17 @@ class RouteFinder
     @lines_searched = []
     #then get the route, and interpret it to add in the line hops, and then get
       # it in a readable form.
+
+    return "There is no station called #{origin}" if invalid_station?(origin)
+    return "There is no station called #{dest}" if invalid_station?(dest)
     interpret_line_changes(get_route_recurse(origin,dest)).join(' ~> ')
+  end
+
+  def invalid_station?(station)
+    @lines.each do |line|
+      return false if line.contains_station?(station)
+    end
+    true
   end
 
   #helper method to get an array of lines that a particular station lies on - 
